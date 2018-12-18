@@ -53,7 +53,7 @@
                         <a href=".">Home</a>
                     </li>
                     <li >
-                        <a href="features/">Features</a>
+                        <a href="intro/">Introduction</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
@@ -68,7 +68,7 @@
 </li>
                             
 <li >
-    <a href="usage/">Basic Usage</a>
+    <a href="usage/">API Usage</a>
 </li>
                         </ul>
                     </li>
@@ -92,7 +92,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="features/">
+                        <a rel="prev" href="intro/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -107,8 +107,7 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#introduction">Introduction</a></li>
-        <li class="main "><a href="#reference">Reference</a></li>
+        <li class="main active"><a href="#reference">Reference</a></li>
         <li class="main "><a href="#license">License</a></li>
     </ul>
 </div></div>
@@ -118,14 +117,12 @@
 
 <hr />
 <p><a class="github-button" href="https://github.com/wikipedia2vec/wikipedia2vec" data-size="large" data-show-count="true" aria-label="Star wikipedia2vec/wikipedia2vec on GitHub">Star</a></p>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link"></a></h2>
 <p>Wikipedia2Vec is a tool used for obtaining embeddings (vector representations) of words and entities from Wikipedia.
 It is developed and maintained by <a href="http://www.ousia.jp">Studio Ousia</a>.</p>
-<p>This tool enables you to learn embeddings that map words and entities into a unified continuous vector space.
-The embeddings can be used as word embeddings, entity embeddings, and the unified embeddings of words and entities.
-They are used in the state-of-the-art models of various tasks such as <a href="https://arxiv.org/abs/1601.01343">entity linking</a>, <a href="http://www.aclweb.org/anthology/I17-2017">named entity recognition</a>, <a href="https://arxiv.org/abs/1601.01343">entity relatedness</a>, and <a href="https://arxiv.org/abs/1803.08652">question answering</a>.</p>
-<p>The embeddings can be easily trained by a single command with a publicly available Wikipedia dump as input.
-The code is implemented in Python, and optimized using Cython and BLAS.</p>
+<p>This tool enables you to learn embeddings of words and entities simultaneously, and places similar words and entities close to one another in a continuous vector space.
+Embeddings can be easily trained by a single command with a publicly available Wikipedia dump as input.
+This tool has been used in several state-of-the-art NLP models such as <a href="https://arxiv.org/abs/1601.01343">entity linking</a>, <a href="http://www.aclweb.org/anthology/I17-2017">named entity recognition</a>, <a href="https://arxiv.org/abs/1601.01343">entity relatedness</a>, and <a href="https://arxiv.org/abs/1803.08652">question answering</a>.</p>
+<p>This tool has been tested on Linux, Windows, and macOS.</p>
 <p>Pretrained embeddings for 12 languages can be downloaded from <a href="pretrained/">this page</a>.</p>
 <h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link"></a></h2>
 <p>If you use Wikipedia2Vec in a scientific publication, please cite the following paper:</p>
@@ -224,5 +221,5 @@ The code is implemented in Python, and optimized using Cython and BLAS.</p>
 
 <!--
 MkDocs version : 0.17.5
-Build Date UTC : 2018-12-18 03:06:16
+Build Date UTC : 2018-12-18 06:13:47
 -->

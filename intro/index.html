@@ -8,7 +8,7 @@
         <meta name="author" content="Studio Ousia">
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Features - Wikipedia2Vec</title>
+        <title>Introduction - Wikipedia2Vec</title>
         
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -53,7 +53,7 @@
                         <a href="..">Home</a>
                     </li>
                     <li class="active">
-                        <a href="./">Features</a>
+                        <a href="./">Introduction</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
@@ -68,7 +68,7 @@
 </li>
                             
 <li >
-    <a href="../usage/">Basic Usage</a>
+    <a href="../usage/">API Usage</a>
 </li>
                         </ul>
                     </li>
@@ -107,32 +107,46 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#features">Features</a></li>
-            <li><a href="#extended-skip-gram-model-to-learn-embeddings-of-words-and-entities">Extended Skip-Gram Model to Learn Embeddings of Words and Entities</a></li>
+        <li class="main active"><a href="#introduction">Introduction</a></li>
+            <li><a href="#optimized-implementation-for-learning-embeddings">Optimized Implementation for Learning Embeddings</a></li>
             <li><a href="#automatic-generation-of-entity-links">Automatic Generation of Entity Links</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="features">Features<a class="headerlink" href="#features" title="Permanent link"></a></h1>
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link"></a></h1>
 <hr />
-<p>Wikipedia2Vec has two unique features that are designed to effectively learn embeddings from Wikipedia.</p>
-<h2 id="extended-skip-gram-model-to-learn-embeddings-of-words-and-entities">Extended Skip-Gram Model to Learn Embeddings of Words and Entities<a class="headerlink" href="#extended-skip-gram-model-to-learn-embeddings-of-words-and-entities" title="Permanent link"></a></h2>
-<p><img alt="Extended Skip-Gram Model" src="../img/model.png" /></p>
-<p>Wikipedia2Vec is based on the <a href="https://en.wikipedia.org/wiki/Word2vec">Word2vec's skip-gram model</a> that learns to predict neighboring words given each word in corpora.
-We extend the skip-gram model by adding the following two submodels:</p>
+<p><img alt="Extended Skip-Gram Model" src="../img/model.png" />
+Wikipedia2Vec is a tool for learning embeddings of words and entities from Wikipedia.
+The learned embeddings map similar words and entities close to one another in a continuous vector space.</p>
+<p>This tool learns embeddings of words and entities by iterating over entire Wikipedia pages and jointly optimizing the following three submodels:</p>
 <ul>
-<li><em>The link graph model</em> that learns to estimate neighboring entities given an entity in the link graph of Wikipedia entities.</li>
-<li><em>The anchor context model</em> that learns to predict neighboring words given an entity by using a link that points to the entity and its neighboring words.</li>
+<li>
+<p><em>Wikipedia link graph model</em>, which learns entity embeddings by predicting neighboring entities in Wikipedia's link graph, an undirected graph whose nodes are entities and edges represent links between entities, given each entity in Wikipedia.
+Here, an edge is created between a pair of entities if the page of one entity has a link to that of the other entity or if both pages link to each other.</p>
+</li>
+<li>
+<p><em>Word-based skip-gram model</em>, which learns word embeddings by predicting neighboring words given each word in a text contained on a Wikipedia page.</p>
+</li>
+<li>
+<p><em>Anchor context model</em>, which aims to place similar words and entities near one another in the vector space, and to create interactions between embeddings of words and those of entities.
+Here, we obtain referent entities and their neighboring words from links contained in a Wikipedia page, and the model learns embeddings by predicting neighboring words given each entity.</p>
+</li>
 </ul>
-<p>By jointly optimizing the skip-gram model and these two submodels, our model simultaneously learns the embedding of words and entities from Wikipedia.
-For further details, please refer to our paper: <a href="https://arxiv.org/abs/1601.01343">Joint Learning of the Embedding of Words and Entities for Named Entity Disambiguation</a>.</p>
+<p>These three submodels are based on the <a href="https://en.wikipedia.org/wiki/Word2vec#CBOW_and_skip_grams">skip-gram model</a>, which is a neural network model with a training objective to find embeddings that are useful for predicting context items (i.e., neighboring words or entities) given a target item.
+For further details, please refer to this paper: <a href="https://arxiv.org/abs/1601.01343">Joint Learning of the Embedding of Words and Entities for Named Entity Disambiguation</a>.</p>
+<h2 id="optimized-implementation-for-learning-embeddings">Optimized Implementation for Learning Embeddings<a class="headerlink" href="#optimized-implementation-for-learning-embeddings" title="Permanent link"></a></h2>
+<p>Wikipedia2Vec is implemented in Python, and most of its code is converted into C++ using Cython to boost its performance.
+Linear algebraic operations required to learn embeddings are performed by Basic Linear Algebra Subprograms (BLAS).
+We store the embeddings as a float matrix in a shared memory space and update it in parallel using multiple processes.</p>
 <h2 id="automatic-generation-of-entity-links">Automatic Generation of Entity Links<a class="headerlink" href="#automatic-generation-of-entity-links" title="Permanent link"></a></h2>
-<p>Many entity names in Wikipedia do not appear as links because Wikipedia instructs its contributors <a href="https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Linking#Principles">to link an entity name if it is the first occurrence in the page</a>.
-This is problematic for our model because the anchor context model depends on entity links to generate contextual words of entities.</p>
-<p>To address this, we implement a feature that automatically links entity names that do not appear as links.
-In particular, it takes all words and phrases, and treats them as candidates of entity names if they exist in the <em>Mention DB</em> that contains mapping of an entity name (e.g., “Washington”) to a set of possible referent entities (e.g., Washington, D.C. and George Washington).
-Then, it converts an entity name to a link pointing to an entity if the entity name is unambiguous (i.e., there is only one referent entity associated to the entity name in the DB) or the entity is referred by an entity link in the same page.</p></div>
+<p>One challenge is that many entity names do not appear as links in Wikipedia.
+This is because Wikipedia instructs its contributors to <a href="https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Linking#Principles">create a link only when the name first occurs on the page</a>.
+This is problematic because Wikipedia2Vec uses links as a source to learn embeddings.</p>
+<p>To address this, our tool provides a feature that automatically generates links.
+It first creates a dictionary that maps each entity name to its possible referent entities.
+This is done by extracting all names and their referring entities from all links contained in Wikipedia.
+Then, during training, our tool takes all words and phrases from the target page and converts each into a link to an entity, if the entity is referred by a link on the same page, or if there is only one referent entity associated to the name in the dictionary.</p></div>
         </div>
 
         <footer class="col-md-12">

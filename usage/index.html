@@ -8,7 +8,7 @@
         <meta name="author" content="Studio Ousia">
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Basic Usage - Wikipedia2Vec</title>
+        <title>API Usage - Wikipedia2Vec</title>
         
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -53,7 +53,7 @@
                         <a href="..">Home</a>
                     </li>
                     <li >
-                        <a href="../features/">Features</a>
+                        <a href="../intro/">Introduction</a>
                     </li>
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
@@ -68,7 +68,7 @@
 </li>
                             
 <li class="active">
-    <a href="./">Basic Usage</a>
+    <a href="./">API Usage</a>
 </li>
                         </ul>
                     </li>
@@ -107,18 +107,21 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#basic-usage">Basic Usage</a></li>
+        <li class="main active"><a href="#api-usage">API Usage</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link"></a></h1>
+<h1 id="api-usage">API Usage<a class="headerlink" href="#api-usage" title="Permanent link"></a></h1>
 <hr />
+<p>Wikipedia2Vec provides functions to access the learned embeddings of words and entities.</p>
+<p>The embeddings can be loaded by the <code>load()</code> method:</p>
 <pre><code class="python">&gt;&gt;&gt; from wikipedia2vec import Wikipedia2Vec
-
 &gt;&gt;&gt; wiki2vec = Wikipedia2Vec.load(MODEL_FILE)
+</code></pre>
 
-&gt;&gt;&gt; wiki2vec.get_word_vector('the')
+<p>The embeddings of words and those of entities can be obtained using the <code>get_word_vector()</code> and <code>get_entity_vector()</code> methods, respectively:</p>
+<pre><code class="python">&gt;&gt;&gt; wiki2vec.get_word_vector('the')
 memmap([ 0.01617998, -0.03325786, -0.01397999, -0.00150471,  0.03237337,
 ...
        -0.04226106, -0.19677088, -0.31087297,  0.1071524 , -0.09824426], dtype=float32)
@@ -127,8 +130,11 @@ memmap([ 0.01617998, -0.03325786, -0.01397999, -0.00150471,  0.03237337,
 memmap([-0.19793572,  0.30861306,  0.29620451, -0.01193621,  0.18228433,
 ...
         0.04986198,  0.24383858, -0.01466644,  0.10835337, -0.0697331 ], dtype=float32)
+</code></pre>
 
-&gt;&gt;&gt; wiki2vec.most_similar(wiki2vec.get_word('yoda'), 5)
+<p>Furthermore, the <code>most_similar()</code> method takes an item (i.e., words or entities), and computes most similar items of the item in the vector space based on cosine similarity.
+The number of items to be returned can be specified as a second argument:</p>
+<pre><code class="python">&gt;&gt;&gt; wiki2vec.most_similar(wiki2vec.get_word('yoda'), 5)
 [(&lt;Word yoda&gt;, 1.0),
  (&lt;Entity Yoda&gt;, 0.84333622),
  (&lt;Word darth&gt;, 0.73328167),

@@ -53,7 +53,7 @@
                         <a href="..">Home</a>
                     </li>
                     <li >
-                        <a href="../features/">Features</a>
+                        <a href="../intro/">Introduction</a>
                     </li>
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
@@ -68,7 +68,7 @@
 </li>
                             
 <li >
-    <a href="../usage/">Basic Usage</a>
+    <a href="../usage/">API Usage</a>
 </li>
                         </ul>
                     </li>
@@ -162,7 +162,8 @@ The English dump file can be obtained by running the following command.</p>
 <li><em>--entity-neg-power</em>: Negative sampling of entities is performed based on the probability proportional to the frequency raised to the power specified by this option (default: 0)</li>
 <li><em>--pool-size</em>: The number of worker processes (default: the number of CPUs)</li>
 </ul>
-<p>The <em>train</em> command internally calls the five commands described below (namely, <em>build_dump_db</em>, <em>build_dictionary</em>, <em>build_link_graph</em>, <em>build_mention_db</em>, and <em>train_embedding</em>).</p>
+<p>The <em>train</em> command internally calls the five commands described below (namely, <em>build_dump_db</em>, <em>build_dictionary</em>, <em>build_link_graph</em>, <em>build_mention_db</em>, and <em>train_embedding</em>).
+Further, the learned model file can be converted to a text file compatible with the format of <a href="https://code.google.com/archive/p/word2vec/">Word2vec</a> and <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> using the <a href="#saving-embeddings-in-text-format">save_text</a> command.</p>
 <h2 id="building-dump-database">Building Dump Database<a class="headerlink" href="#building-dump-database" title="Permanent link"></a></h2>
 <p>The <em>build_dump_db</em> command creates a database that contains Wikipedia pages each of which consists of texts and anchor links in it.</p>
 <pre><code class="text">% wikipedia2vec build_dump_db DUMP_FILE OUT_FILE
